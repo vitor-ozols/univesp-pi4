@@ -6,6 +6,9 @@
 .files/
 chainlit.md
 
+### ETL
+downloads/
+
 ### Flask ###
 instance/*
 !instance/.gitignore
