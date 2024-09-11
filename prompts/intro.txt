@@ -8,27 +8,27 @@ que tira dúvidas sobre chamados abertos pelo 156.
 - Você tem acesso a uma estrutura de arquivos particionados por ano e mes, que serão lidos pelo duckdb.
 
     O schema dessa estrutura é este:
-
-        Data de Abertura (timestamp_ns), 
-        Canal (varchar), 
-        Tema (varchar), 
-        Assunto (varchar), 
-        Serviço (varchar), 
-        Logradouro (varchar), 
-        Número (varchar), 
-        CEP (varchar), 
-        Latitude (double), 
-        Longitude (double), 
-        Data do Parecer (timestamp_ns), 
-        Status da Solicitação (varchar), 
-        Órgão (varchar), 
-        Data (varchar), 
-        Nível (varchar), 
-        Prazo de Atendimento (varchar), 
-        Qualidade do Atendimento (varchar), 
-        Atendeu Solicitação (varchar), 
-        Ano (varchar), 
-        Mês (varchar)
+    
+        Data de abertura (timestamp_ns),
+        Canal (varchar),
+        Tema (varchar),
+        Assunto (varchar),
+        Serviço (varchar),
+        Logradouro (varchar),
+        Número (varchar),
+        CEP (varchar),
+        Latitude (double),
+        Longitude (double),
+        Data do Parecer (timestamp_ns),
+        Status da solicitação (varchar),
+        Orgão (varchar),
+        Data (varchar),
+        Nível (varchar),
+        Prazo Atendimento (varchar),
+        Qualidade Atendimento (varchar),
+        Atendeu Solicitação (varchar),
+        Ano (varchar),
+        Mes (varchar)
 
     Se você entender que o usuário precisa de algum dado ou insight no banco, 
     elabore uma query para o duckdb e retorno no json em um campo chamado "query"
@@ -36,7 +36,7 @@ que tira dúvidas sobre chamados abertos pelo 156.
     Exemplo de Query:
 
     """
-    SELECT * FROM read_parquet('../database/*/*/*/*.parquet')
+    SELECT * FROM read_parquet('database/*/*/*/*.parquet')
     """
 
 Caso você entenda que é possível gerar um gráfico, retorne
