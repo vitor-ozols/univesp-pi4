@@ -2,7 +2,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 
 def make_chart(data=None, type=None, x=None, y=None, z=None, color=None, names=None, values=None, lat=None, lon=None, theta=None, r=None, path=None, text=None, mode=None, title=None):
-    if git atype == 'bar':
+    if type == 'bar':
         # Gráfico de Barras
         fig = px.bar(data, x=x, y=y, color=color, text=text, title=title)
 
@@ -82,10 +82,6 @@ def make_chart(data=None, type=None, x=None, y=None, z=None, color=None, names=N
         # Gráfico de Linhas Multivariável
         fig = px.line(data, x=x, y=y, color=color, title=title)
 
-    elif type == 'candlestick':
-        # Candlestick Chart (dados financeiros)
-        fig = go.Figure(data=[go.Candlestick(x=data[x], open=data['Abertura'], high=data['Alta'], low=data['Baixa'], close=data['Fechamento'])])
-
     elif type == 'scatter_3d':
         # Gráfico de Dispersão 3D
         fig = px.scatter_3d(data, x=x, y=y, z=z, color=color, title=title)
@@ -113,10 +109,6 @@ def make_chart(data=None, type=None, x=None, y=None, z=None, color=None, names=N
     elif type == 'pareto':
         # Gráfico de Pareto
         fig = px.bar(data, x=x, y=y, text=text).update_traces(textposition='outside')
-
-    elif type == 'ohlc':
-        # OHLC Chart
-        fig = go.Figure(data=[go.Ohlc(x=data[x], open=data['Abertura'], high=data['Alta'], low=data['Baixa'], close=data['Fechamento'])])
 
     else:
         # Tipo não suportado

@@ -7,6 +7,8 @@ import json
 
 # Configurar a chave da API da OpenAI
 client = OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
+with open('prompts/intro.txt', encoding='utf-8', mode='r') as txt:
+    prompt = txt.read()
 
 # Função para lidar com mensagens
 @cl.on_message
@@ -34,16 +36,16 @@ async def handle_message(message: cl.Message):
     else:
         # Adiciona as instruções do sistema no início da conversa
         if not session:
-            session.append({"role": "system", "content": "Você é um assistente útil."})
+            session.append({"role": "system", "content": prompt})
 
-        # Chama a API do ChatGPT com GPT-4 usando a nova interface
         response = client.chat.completions.create(
             model="gpt-4-turbo",
-            messages=session  # Passa o histórico da conversa
+            messages=session
         )
 
         # Extrai o conteúdo da resposta
         content = response.choices[0].message.content.strip()
+        json_content = json.loads(content)
 
         # Adiciona a resposta do assistente ao histórico
         session.append({"role": "assistant", "content": content})

@@ -39,25 +39,38 @@ que tira dúvidas sobre chamados abertos pelo 156.
     SELECT * FROM read_parquet('../database/*/*/*/*.parquet')
     """
 
-Caso você entenda que é possível gerar um gráfico, retorne uma função em python para isso,
-num campo do json chamado "func", com essa estrutura:
+Caso você entenda que é possível gerar um gráfico, retorne
+num campo do json chamado "chart", o tipo de chart e os argumentos necessários para do chart
 
-def graph_plotly():
-    query = """
-    SELECT 
-    Ano, 
-    COUNT(*) as Total_Chamados 
-    FROM read_parquet('../database/*/*/*/*.parquet') 
-    GROUP BY Ano 
-    """
-    df = duckdb.sql(query).df()
+obs:
+    Os charts são desenvolvidos nessas libs:
+    import plotly.express as px
+    import plotly.graph_objects as go
 
-    fig = go.Figure(
-    data=[go.Bar(x=df['Ano'], y=df[])],
-    layout_title_text="Total de Chamados por Ano"
-    )
-    elements = [cl.Plotly(name="chart", figure=fig, display="inline")]
-    return elements
+    Os tipos de chart são:
+        chart_types = [
+            'bar','line','scatter','pie','histogram','area',
+            'box','stacked_bar','density_heatmap','density_contour',
+            'radar','polar_bar','scatter_geo','choropleth','sunburst',
+            'treemap','funnel', 'icicle','heatmap', 'multiline',
+            'scatter_3d', 'surface_3d','waterfall', 'bullet',
+            'line_geo', 'violin', 'pareto'
+            ]
 
+    Possíveis argumentos:
+        possible_arguments = [
+            'data','type','x','y','z','color','names',
+            'values','lat','lon','theta','r','path',
+            'text','mode','title'
+            ]
 
-
+    Exemplo json:{
+        "message": "Menssagem exemplo",
+        "query": "SELECT * FROM read_parquet('../database/*/*/*/*.parquet')"
+        "chart": {
+            'type':'bar',
+            'x':'Tema', 
+            "y":'Serviço', 
+            "title":'Gráfico de Barras por Serviço e Tema')
+            }
+        } 
