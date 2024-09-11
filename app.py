@@ -2,6 +2,8 @@ import plotly.graph_objects as go
 import chainlit as cl
 from openai import OpenAI
 import os
+import json
+
 
 # Configurar a chave da API da OpenAI
 client = OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
