@@ -14,30 +14,33 @@ with open('prompts/intro.txt', encoding='utf-8', mode='r') as txt:
 # msg handler
 @cl.on_message
 async def handle_message(message: cl.Message):
-    # manter logica de chat com sessão
+    # obter ou inicializar a sessão do usuário
     session = cl.user_session.get("history", [])
-    session.append({"role": "user", "content": message.content})
-
-    if not session:
+    if len(session) == 0:
         session.append({"role": "system", "content": prompt})
 
+    session.append({"role": "user", "content": message.content})
     response = client.chat.completions.create(model="gpt-4-turbo",
                                               messages=session)
 
-    # Extrai o conteúdo da resposta
-    print(response.choices[0].message.content.strip())
-    json_content = json.loads(response.choices[0].message.content.strip())
-    session.append({"role": "assistant", "content": json_content['message']})
-    
-    cl.user_session.set("history", session)
-    await cl.Message(content=json_content['message']).send()
+    print(response)
+    response_content = response.choices[0].message.content
+    json_content = json.loads(response_content)
 
+    assistant_message = json_content['message']
+    session.append({"role": "assistant", "content": assistant_message})
+    cl.user_session.set("history", session)
+    await cl.Message(content=assistant_message).send()
+
+    # Se houver query e chart, gerar o gráfico
     if 'query' in json_content and 'chart' in json_content:
         df = duckdb.sql(json_content['query']).df()
         fig = make_chart(df, **json_content['chart'])
         elements = [cl.Plotly(name="chart", figure=fig, display="inline")]
         await cl.Message(content="Aqui está o gráfico solicitado:", elements=elements).send()
 
+    # Se houver apenas query, mostrar o dataframe
     elif 'query' in json_content and 'chart' not in json_content:
         df = duckdb.sql(json_content['query']).df()
-        await cl.Text(content=f"Dataframe:\n{df}")
+        await cl.DataFrame(df, description="Dataframe from query")
+
