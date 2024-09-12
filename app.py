@@ -32,15 +32,18 @@ async def handle_message(message: cl.Message):
     cl.user_session.set("history", session)
     await cl.Message(content=assistant_message).send()
 
-    # Se houver query e chart, gerar o gráfico
+    # se houver query e chart, gerar o gráfico
     if 'query' in json_content and 'chart' in json_content:
-        df = duckdb.sql(json_content['query']).df()
+        query = json_content['query'].replace('database.parquet', 'database/*/*/*/*.parquet')
+        df = duckdb.sql(query).df()
         fig = make_chart(df, **json_content['chart'])
         elements = [cl.Plotly(name="chart", figure=fig, display="inline")]
         await cl.Message(content="Aqui está o gráfico solicitado:", elements=elements).send()
 
-    # Se houver apenas query, mostrar o dataframe
+    # s
+    # e houver apenas query, mostrar o dataframe
     elif 'query' in json_content and 'chart' not in json_content:
         df = duckdb.sql(json_content['query']).df()
-        await cl.DataFrame(df, description="Dataframe from query")
+        df_md = df.to_markdown()
+        await cl.Message(content=df_md).send()
 
