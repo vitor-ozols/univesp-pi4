@@ -1,0 +1,10 @@
+{
+  "message": "Exemplo de mensagem",
+  "query": "SELECT * FROM read_parquet('database/*/*/*/*.parquet')",
+  "chart": {
+    "type": "bar",
+    "x": "Tema",
+    "y": "Serviço",
+    "title": "Gráfico de Barras por Serviço e Tema"
+  }
+}
