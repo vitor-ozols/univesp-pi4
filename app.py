@@ -86,3 +86,9 @@ async def handle_message(message: cl.Message):
         df = duckdb.sql(json_content['query']).df()
         df_md = df.to_markdown()
         await cl.Message(content=df_md).send()
+
+#TODO
+"""
+Adicionar lógica para quando vem só a query
+Adicionar lógica para alimentar o chat com dados da tabela, tipo um distinc
+"""
