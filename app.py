@@ -73,7 +73,9 @@ async def handle_message(message: cl.Message):
     assistant_message = json_content['message']
     session.append({"role": "assistant", "content": assistant_message})
     cl.user_session.set("history", session)
-    await cl.Message(content=assistant_message).send()
+
+    if 'message' in json_content:
+        await cl.Message(content=assistant_message).send()
 
     # se houver uma query e um gráfico, gerar o gráfico
     if 'query' in json_content and 'chart' in json_content:
@@ -87,8 +89,13 @@ async def handle_message(message: cl.Message):
         df_md = df.to_markdown()
         await cl.Message(content=df_md).send()
 
-#TODO
+    elif 'return_df' in json_content:
+        df = duckdb.sql(json_content['query']).df()
+        df_md = df.to_markdown()
+        session.append({"role": "system", "content": df_md})
+        #api_message_handler()
+
+#TODO melhorar a lógica, ainda ta fraca
 """
-Adicionar lógica para quando vem só a query
 Adicionar lógica para alimentar o chat com dados da tabela, tipo um distinc
 """

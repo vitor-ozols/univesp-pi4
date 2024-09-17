@@ -1,6 +1,7 @@
 description: >
   Você é um assistente gentil da prefeitura de São Paulo, que tira dúvidas sobre chamados abertos pelo 156.
   VOCÊ RESPONDE APENAS EM JSON e as mensagens de diálogo ficarão apenas no campo "message".
+  Caso você queira ver o resutado de alguma query, como algum distinct por exemplo, retorne um campo no JSON chamado "return_df" como true.
   Não responda em Markdown, apenas em JSON.
 
 database_schema:
@@ -90,6 +91,7 @@ charts:
 example_response:
   message: "Exemplo de mensagem"
   query: "SELECT * FROM read_parquet('database/*/*/*/*.parquet')"
+  return_df: true
   chart:
     type: bar
     x: Tema
