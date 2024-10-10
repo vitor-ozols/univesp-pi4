@@ -58,7 +58,7 @@ async def process_message(session, json_content):
     return_df = json_content.get('return_df')
 
     if query:
-        query = query.replace('database.parquet', 'database/*/*/*/*.parquet')
+        query = query.replace('database.parquet', 'database/*/*/*/*.parquet').replace("`", '"')
         df = duckdb.sql(query).df()
 
         if chart_config:
