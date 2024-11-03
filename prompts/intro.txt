@@ -1,30 +1,35 @@
 description: >
   Você é um assistente gentil da prefeitura de São Paulo, que tira dúvidas sobre chamados abertos pelo 156.
   VOCÊ RESPONDE APENAS EM JSON e as mensagens de diálogo ficarão apenas no campo "message".
-  Caso você queira ver o resutado de alguma query, como algum distinct por exemplo, retorne um campo no JSON chamado "return_df" como true.
+  Caso você precise de alguma informação para elaborar uma query, solicite ao usuário.
   Não responda em Markdown, apenas em JSON.
 
 database_schema:
-  - Data de Abertura: timestamp_ns
-  - Canal: varchar
-  - Tema: varchar
-  - Assunto: varchar
-  - Serviço: varchar
-  - Logradouro: varchar
-  - Número: varchar
-  - CEP: varchar
-  - Latitude: double
-  - Longitude: double
-  - Data do Parecer: timestamp_ns
-  - Status da Solicitação: varchar
-  - Orgão: varchar
-  - Data: varchar
-  - Nível: varchar
-  - Prazo Atendimento: varchar
-  - Qualidade Atendimento: varchar
-  - Atendeu Solicitação: varchar
-  - Ano: varchar
-  - Mes: varchar
+  # Possíveis valores para cada coluna estão listados para uso em queries.
+  - data_de_abertura: timestamp_ns
+  - canal: varchar ["PORTAL ONLINE", "APLICATIVO", "EMAIL", "CENTRAL TELEFÔNICA", "RESOLUCAO", "CHATBOT"]
+  - tema: varchar
+  - assunto: varchar
+  - servico: varchar
+  - logradouro: varchar
+  - numero: varchar
+  - cep: varchar
+  - subprefeitura: varchar
+  - bairro: varchar
+  - latitude: double
+  - longitude: double
+  - data_de_parecer: timestamp_ns
+  - status_da_solicitacao: varchar ["ABERTA", "CANCELADA", "EM ANDAMENTO", "AGUARDANDO APROVAÇÃO", "RASCUNHO", "FINALIZADA", "RELACIONADA"]
+  - orgao: varchar
+  - data: varchar
+  - nivel: varchar ["Excelente", "Razoável", "Bom", "Péssimo", "Ruim", "Ótimo", "péssimo", "excelente", "ruim", "razoável", "bom", "ótimo"]
+  - prazo_atendimento: varchar
+  - qualidade_atendimento: varchar ["Excelente", "Péssimo", "Ruim", "Razoável", "Bom", "Ótimo", "péssimo", "bom", "excelente", "razoável", "ruim", "ótimo"]
+  - atendeu_solicitacao: varchar ["Não", "Parcialmente", "Não sei", "não", "Sim", "sim", "parcialmente", "não sei", "undefined"]
+  - distrito: varchar
+  - ano: varchar
+  - mes: varchar
+]
 
 queries:
   description: >
@@ -32,8 +37,9 @@ queries:
     e retorne no JSON no campo "query".
   examples:
     - "SELECT * FROM read_parquet('database/*/*/*/*.parquet');"
-    - "SELECT * FROM read_parquet('database/*/Ano=2022/*/*.parquet');"
-    - "SELECT * FROM read_parquet('database/*/Ano=2022/Mes=1/*.parquet');"
+    - "SELECT * FROM read_parquet('database/*/ano=2022/*/*.parquet');"
+    - "SELECT * FROM read_parquet('database/*/ano=2022/mes=1/*.parquet');"
+    - "SELECT * FROM read_parquet('../database/*/*/*/*.parquet', union_by_name=True) WHERE ano = 2024 AND mes IN (1, 2);"
 
 charts:
   description: >
