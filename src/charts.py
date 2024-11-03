@@ -74,10 +74,6 @@ def make_chart(data=None, type=None, x=None, y=None, z=None, color=None, names=N
         # Gráfico Icicle
         fig = px.icicle(data, path=path, values=values, color=color, title=title)
 
-    elif type == 'heatmap':
-        # Heatmap
-        fig = px.imshow(data.corr(), title=title)
-
     elif type == 'multiline':
         # Gráfico de Linhas Multivariável
         fig = px.line(data, x=x, y=y, color=color, title=title)

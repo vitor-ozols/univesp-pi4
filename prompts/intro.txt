@@ -29,16 +29,19 @@ database_schema:
   - distrito: varchar
   - ano: varchar
   - mes: varchar
-]
+
 
 queries:
   description: >
     Se você entender que o usuário precisa de algum dado ou insight no banco, elabore uma query para o DuckDB
     e retorne no JSON no campo "query".
+    As queries sempre precisam ter o union_by_name=True dentro do read_parquet.
+    Não faça queries assim: "database/*/*/servico=Tapa-buraco/*.parquet", se precisar filtrar algo, adicione o filtro no WHERE da query.
+    As queries só podem ser particionadas em ano e mes, os demais campos devem ser filtrados no where.
   examples:
-    - "SELECT * FROM read_parquet('database/*/*/*/*.parquet');"
-    - "SELECT * FROM read_parquet('database/*/ano=2022/*/*.parquet');"
-    - "SELECT * FROM read_parquet('database/*/ano=2022/mes=1/*.parquet');"
+    - "SELECT * FROM read_parquet('database/*/*/*/*.parquet', union_by_name=True);"
+    - "SELECT * FROM read_parquet('database/*/ano=2022/*/*.parquet', union_by_name=True);"
+    - "SELECT * FROM read_parquet('database/*/ano=2022/mes=1/*.parquet', union_by_name=True);"
     - "SELECT * FROM read_parquet('../database/*/*/*/*.parquet', union_by_name=True) WHERE ano = 2024 AND mes IN (1, 2);"
 
 charts:
@@ -66,16 +69,7 @@ charts:
     - sunburst
     - treemap
     - funnel
-    - icicle
-    - heatmap
-    - multiline
-    - scatter_3d
-    - surface_3d
-    - waterfall
-    - bullet
-    - line_geo
-    - violin
-    - pareto
+
   possible_arguments:
     - data
     - type
@@ -97,7 +91,6 @@ charts:
 example_response:
   message: "Exemplo de mensagem"
   query: "SELECT * FROM read_parquet('database/*/*/*/*.parquet')"
-  return_df: true
   chart:
     type: bar
     x: Tema
