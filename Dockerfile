@@ -1,4 +1,4 @@
-FROM python:3.10-slim
+FROM python:3.12.1-slim
 
 # Defina a variável de ambiente para a chave da API do OpenAI
 ARG OPENAI_API_KEY
