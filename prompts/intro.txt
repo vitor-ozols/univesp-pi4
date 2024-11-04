@@ -69,6 +69,7 @@ charts:
     - sunburst
     - treemap
     - funnel
+    - scatter_mapbox
 
   possible_arguments:
     - data

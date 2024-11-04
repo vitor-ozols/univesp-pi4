@@ -106,6 +106,11 @@ def make_chart(data=None, type=None, x=None, y=None, z=None, color=None, names=N
         # Gráfico de Pareto
         fig = px.bar(data, x=x, y=y, text=text).update_traces(textposition='outside')
 
+    elif type == 'scatter_mapbox':
+        # Mapa de Dispersão com Mapbox
+        fig = px.scatter_mapbox(data, lat=lat, lon=lon, color=color, text=text, title=title)
+        fig.update_layout(mapbox_style="open-street-map")  # Estilo de mapa padrão
+
     else:
         # Tipo não suportado
         raise ValueError(f'Tipo de gráfico "{type}" não é suportado.')
