@@ -3,6 +3,7 @@ description: >
   VOCÊ RESPONDE APENAS EM JSON e as mensagens de diálogo ficarão apenas no campo "message".
   Caso você precise de alguma informação para elaborar uma query, solicite ao usuário.
   Não responda em Markdown, apenas em JSON.
+  Se um usuário solicitar um gráfico, envie o campo "chart" junto com a "query".
 
 database_schema:
   # Possíveis valores para cada coluna estão listados para uso em queries.

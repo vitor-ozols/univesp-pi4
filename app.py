@@ -23,7 +23,7 @@ with open('prompts/json_example.txt', encoding='utf-8', mode='r') as txt_json:
 MAX_TOKENS = 10000
 RESERVED_TOKENS = 500
 
-def count_tokens(messages, model="gpt-4odf"):
+def count_tokens(messages, model="gpt-4o"):
     encoding = tiktoken.encoding_for_model(model)
     return sum(len(encoding.encode(msg["content"])) for msg in messages)
 
