@@ -20,10 +20,10 @@ with open('prompts/intro.txt', encoding='utf-8', mode='r') as txt:
 with open('prompts/json_example.txt', encoding='utf-8', mode='r') as txt_json:
     json_example = txt_json.read()
 
-MAX_TOKENS = 4096
+MAX_TOKENS = 10000
 RESERVED_TOKENS = 500
 
-def count_tokens(messages, model="gpt-4-turbo"):
+def count_tokens(messages, model="gpt-4odf"):
     encoding = tiktoken.encoding_for_model(model)
     return sum(len(encoding.encode(msg["content"])) for msg in messages)
 
@@ -35,7 +35,7 @@ def call_openai_api(session, max_attempts=5):
     for attempt in range(max_attempts):
         try:
             response = client.chat.completions.create(
-                model="gpt-4-turbo",
+                model="gpt-4o",
                 messages=messages_for_api,
                 response_format={"type": "json_object"}
             )
