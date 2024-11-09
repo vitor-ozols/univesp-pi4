@@ -61,7 +61,7 @@ def process_message(session, json_content):
     if query:
         assistant_data['query'] = query  # Armazena a consulta
         try:
-            query_executavel = query.replace('database.parquet', 'database/*/*/*/*.parquet').replace("`", '"')
+            query_executavel = query.replace('database.parquet', 'database/*/*/*.parquet').replace("`", '"')
             df = duckdb.sql(query_executavel).df()
 
             if chart_config:
@@ -72,6 +72,7 @@ def process_message(session, json_content):
         except Exception as e:
             st.error(f"Ocorreu um erro ao processar a consulta ou gerar o gráfico: {str(e)}")
             assistant_data['error'] = str(e)
+            
     # Adicionar os dados ao histórico
     if assistant_data:
         # Encontrar a última mensagem do assistente e adicionar os dados
