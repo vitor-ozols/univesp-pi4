@@ -23,10 +23,10 @@ database_schema:
   - status_da_solicitacao: varchar ["ABERTA", "CANCELADA", "EM ANDAMENTO", "AGUARDANDO APROVAÇÃO", "RASCUNHO", "FINALIZADA", "RELACIONADA"]
   - orgao: varchar
   - data: varchar
-  - nivel: varchar ["Excelente", "Razoável", "Bom", "Péssimo", "Ruim", "Ótimo", "péssimo", "excelente", "ruim", "razoável", "bom", "ótimo"]
+  - nivel: varchar ["undefined", "péssimo", "razoável", "ruim", "ótimo", "bom", "excelente", "selecione"]
   - prazo_atendimento: varchar
-  - qualidade_atendimento: varchar ["Excelente", "Péssimo", "Ruim", "Razoável", "Bom", "Ótimo", "péssimo", "bom", "excelente", "razoável", "ruim", "ótimo"]
-  - atendeu_solicitacao: varchar ["Não", "Parcialmente", "Não sei", "não", "Sim", "sim", "parcialmente", "não sei", "undefined"]
+  - qualidade_atendimento: varchar ["excelente", "péssimo", "ruim", "razoável", "bom", "ótimo"]
+  - atendeu_solicitacao: varchar ["não", "parcialmente", "não sei", "sim", "undefined"]
   - distrito: varchar
   - ano: varchar
   - mes: varchar
@@ -40,10 +40,10 @@ queries:
     Não faça queries assim: "database/*/*/servico=Tapa-buraco/*.parquet", se precisar filtrar algo, adicione o filtro no WHERE da query.
     As queries só podem ser particionadas em ano e mes, os demais campos devem ser filtrados no where.
   examples:
-    - "SELECT * FROM read_parquet('database/*/*/*/*.parquet', union_by_name=True);"
-    - "SELECT * FROM read_parquet('database/*/ano=2022/*/*.parquet', union_by_name=True);"
-    - "SELECT * FROM read_parquet('database/*/ano=2022/mes=1/*.parquet', union_by_name=True);"
-    - "SELECT * FROM read_parquet('../database/*/*/*/*.parquet', union_by_name=True) WHERE ano = 2024 AND mes IN (1, 2);"
+    - "SELECT * FROM read_parquet('database/*/*/*.parquet', union_by_name=True);"
+    - "SELECT * FROM read_parquet('database/ano=2022/*/*.parquet', union_by_name=True);"
+    - "SELECT * FROM read_parquet('database/ano=2022/mes=1/*.parquet', union_by_name=True);"
+    - "SELECT * FROM read_parquet('/database/*/*/*.parquet', union_by_name=True) WHERE ano = 2024 AND mes IN (1, 2);"
 
 charts:
   description: >
