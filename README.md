@@ -2,7 +2,7 @@
 
 Este estudo tem como objetivo explorar a base de dados dos chamados, identificando padrões de atendimento em diferentes regiões e tipos de serviço. O foco do projeto é o desenvolvimento de um chatbot que facilita a visualização dos dados, gerando gráficos e dashboards automaticamente. Essa ferramenta interativa permite que os usuários explorem métricas como a distribuição dos chamados, taxas de atendimento e tempo médio de resposta, oferecendo uma maneira prática e visual de interpretar as informações disponíveis.
 
-### Diagrama
+### Diagrama da Solução
 ![](misc/Diagrama.png)
 
 ### Build
